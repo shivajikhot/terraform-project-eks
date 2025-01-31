@@ -8,6 +8,6 @@ spec:
     app: patient-service
   ports:
     - protocol: TCP
-      port: 3000  # External port to access
+      port: 3001  # External port to access
       targetPort: 3000  # Updated to match container port
   type: LoadBalancer
