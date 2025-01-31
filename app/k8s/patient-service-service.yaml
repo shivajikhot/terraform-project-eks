@@ -10,4 +10,4 @@ spec:
     - protocol: TCP
       port: 80  # External port to access
       targetPort: 3000  # Updated to match container port
-  type: ClusterIP
+  type: LoadBalancer
