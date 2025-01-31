@@ -1,0 +1,30 @@
+name: Kubernetes Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Set up EKS kubeconfig
+        run: aws eks --region us-west-1 update-kubeconfig --name my-eks-cluster
+
+      - name: Apply Kubernetes Manifests
+        run: |
+            kubectl apply -f k8s/
+          # kubectl apply -f k8s/patient-service-deployment.yaml
+          # kubectl apply -f k8s/appointment-service-deployment.yaml
+          # kubectl apply -f k8s/patient-service-service.yaml
+          # kubectl apply -f k8s/appointment-service-service.yaml
+          # kubectl apply -f k8s/app-ingress.yaml  # If using ingress
