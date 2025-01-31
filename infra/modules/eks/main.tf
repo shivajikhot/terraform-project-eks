@@ -3,7 +3,7 @@ resource "aws_eks_cluster" "main" {
   name     = var.cluster_name
   role_arn = var.cluster_role_arn
   vpc_config {
-    subnet_ids = var.private_subnet_id
+    subnet_ids = var.private_subnet_ids
     endpoint_public_access = true
     endpoint_private_access = true
   }
@@ -25,7 +25,7 @@ resource "aws_eks_fargate_profile" "main" {
   }
 
   # Optionally, you can associate specific subnets to the Fargate profile
-  subnet_ids = var.private_subnet_id
+  subnet_ids = var.private_subnet_ids
 }
 
 
