@@ -25,7 +25,7 @@ resource "aws_eks_fargate_profile" "main" {
   }
 
   # Optionally, you can associate specific subnets to the Fargate profile
-  subnet_ids = var.subnet_ids
+  subnet_ids = var.private_subnet_ids
 }
 
 
