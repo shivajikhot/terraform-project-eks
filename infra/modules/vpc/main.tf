@@ -27,13 +27,15 @@ resource "aws_subnet" "public" {
   }
 }
 
-# Private Subnet (without direct internet access)
+# Private Subnets (with route table and NAT gateway association)
 resource "aws_subnet" "private" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr
-  availability_zone = var.availability_zone[1]
+  count = length(var.private_subnet_cidrs)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = element(var.private_subnet_cidrs, count.index)
+  availability_zone       = element(var.availability_zone, count.index)
+  map_public_ip_on_launch = false
   tags = {
-    Name = "Private Subnet"
+    Name = "Private Subnet ${count.index + 1}"
   }
 }
 
@@ -68,7 +70,7 @@ resource "aws_nat_gateway" "main" {
   depends_on    = [aws_eip.nat]
 }
 
-# Route Table for private subnet (route through NAT gateway)
+# Route Table for private subnets (route through NAT gateway)
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
@@ -82,9 +84,10 @@ resource "aws_route_table" "private" {
   }
 }
 
-# Route Table Association for private subnet
+# Route Table Association for private subnets
 resource "aws_route_table_association" "private_association" {
-  subnet_id      = aws_subnet.private.id
+  count         = length(var.private_subnet_cidrs)
+  subnet_id     = element(aws_subnet.private.*.id, count.index)
   route_table_id = aws_route_table.private.id
 }
 
