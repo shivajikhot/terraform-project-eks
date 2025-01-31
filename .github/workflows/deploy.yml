@@ -1,9 +1,10 @@
 name: Kubernetes Deploy
 
 on:
-  push:
-    branches:
-      - main
+ workflow_dispatch:
+#  push:
+#    branches:
+#      - main
 
 
 jobs:
@@ -36,4 +37,4 @@ jobs:
           # kubectl apply -f k8s/appointment-service-deployment.yaml
           # kubectl apply -f k8s/patient-service-service.yaml
           # kubectl apply -f k8s/appointment-service-service.yaml
-          # kubectl apply -f k8s/app-ingress.yaml  # If using ingress
+          # kubectl apply -f k8s/app-ingress.yaml
