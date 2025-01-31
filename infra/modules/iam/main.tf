@@ -25,16 +25,16 @@ resource "aws_iam_role" "fargate_pod_execution_role" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action = "sts:AssumeRole"
-        Principal = {
-          Service = "eks-fargate.amazonaws.com"
-        }
         Effect = "Allow"
-        Sid    = ""
-      },
+        Principal = {
+          Service = "eks-fargate-pods.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
     ]
   })
 }
+
 
 # Attach managed policies to the EKS Cluster Role
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
