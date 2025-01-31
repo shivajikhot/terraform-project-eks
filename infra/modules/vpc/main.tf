@@ -16,20 +16,23 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-# Public Subnet (with route table and IGW association)
+# Public Subnets (with route table and IGW association)
 resource "aws_subnet" "public" {
+  count = length(var.public_subnet_cidrs)
+
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr
-  availability_zone       = var.availability_zone[0]
+  cidr_block              = element(var.public_subnet_cidrs, count.index)
+  availability_zone       = element(var.availability_zone, count.index)
   map_public_ip_on_launch = true
   tags = {
-    Name = "Public Subnet"
+    Name = "Public Subnet ${count.index + 1}"
   }
 }
 
 # Private Subnets (with route table and NAT gateway association)
 resource "aws_subnet" "private" {
   count = length(var.private_subnet_cidrs)
+
   vpc_id                  = aws_vpc.main.id
   cidr_block              = element(var.private_subnet_cidrs, count.index)
   availability_zone       = element(var.availability_zone, count.index)
@@ -53,9 +56,10 @@ resource "aws_route_table" "public" {
   }
 }
 
-# Route Table Association for public subnet
+# Route Table Association for public subnets
 resource "aws_route_table_association" "public_association" {
-  subnet_id      = aws_subnet.public.id
+  count         = length(var.public_subnet_cidrs)
+  subnet_id     = element(aws_subnet.public.*.id, count.index)
   route_table_id = aws_route_table.public.id
 }
 
@@ -66,7 +70,7 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public.id
+  subnet_id     = aws_subnet.public[0].id  # Using the first public subnet for NAT
   depends_on    = [aws_eip.nat]
 }
 
