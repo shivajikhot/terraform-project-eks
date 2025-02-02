@@ -1,6 +1,6 @@
 resource "aws_eks_cluster" "main" {
   name     = var.cluster_name
-  role_arn = var.cluster_role_arn
+  role_arn = var.eks_cluster_role_arn
   vpc_config {
     subnet_ids              = var.private_subnet_ids
     endpoint_public_access  = true
