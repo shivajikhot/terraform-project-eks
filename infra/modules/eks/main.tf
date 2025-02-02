@@ -31,9 +31,4 @@ resource "aws_eks_node_group" "eks_node_group" {
   remote_access {
     ec2_ssh_key = var.ssh_key_name  # Add your SSH key for access
   }
-
-  depends_on = [
-    module.iam.eks_worker_node_policy_attachment,
-    module.iam.eks_cni_policy_attachment
-  ]
 }
