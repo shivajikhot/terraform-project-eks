@@ -33,7 +33,7 @@ resource "aws_eks_node_group" "eks_node_group" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.eks_worker_node,
-    aws_iam_role_policy_attachment.eks_cni_policy
+    module.iam.eks_worker_node_policy_attachment,
+    module.iam.eks_cni_policy_attachment
   ]
 }
