@@ -25,3 +25,7 @@ variable "eks_node_role_arn" {
   description = "IAM Role ARN for the EKS node group"
   type        = string
 }
+variable "vpc_id" {
+  description = "The ID of the VPC where the EKS cluster will be deployed."
+  type        = string
+}
