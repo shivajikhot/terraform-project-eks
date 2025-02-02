@@ -13,10 +13,6 @@ variable "private_subnet_ids" {
   description = "A list of subnet IDs for the EKS cluster."
 }
 
-variable "cluster_role_name" {
-  description = "IAM Role for EKS Cluster"
-  type        = string
-}
 
 variable "ssh_key_name" {
   description = "SSH Key for accessing EC2 nodes"
