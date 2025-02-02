@@ -14,6 +14,11 @@ module "iam" {
   source                = "../../modules/iam"
   cluster_role_name     = "eks-cluster-role"
   node_role_name    = "eks-node-group-role"
+  depends_on = [
+    module.iam.eks_worker_node_policy_attachment,
+    module.iam.eks_cni_policy_attachment
+  ]
+}
 }
 
 output "eks_cluster_role_arn" {
