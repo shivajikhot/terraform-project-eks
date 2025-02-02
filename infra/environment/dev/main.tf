@@ -14,12 +14,9 @@ module "iam" {
   source                = "../../modules/iam"
   cluster_role_name     = "eks-cluster-role"
   node_role_name    = "eks-node-group-role"
-  depends_on = [
-    module.iam.eks_worker_node_policy_attachment,
-    module.iam.eks_cni_policy_attachment
-  ]
+
 }
-}
+
 
 output "eks_cluster_role_arn" {
   value = module.iam.eks_cluster_role_arn
@@ -34,7 +31,12 @@ module "eks" {
   eks_cluster_role_arn  = module.iam.eks_cluster_role_arn
   eks_node_role_arn  = module.iam.eks_node_role_arn 
   private_subnet_ids          = module.vpc.private_subnet_ids
+  depends_on = [
+    module.iam.eks_worker_node_policy_attachment,
+    module.iam.eks_cni_policy_attachment
+  ]
 }
+
 
 output "eks_cluster_name" {
   value = module.eks.eks_cluster_name
