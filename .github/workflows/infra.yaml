@@ -25,8 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: infra/environments/dev
-
+        working-directory: infra/environment/dev
     steps:
       # Checkout repository
       - name: Checkout repository
@@ -90,7 +89,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: ./infra/environments/deve/terraform-docs.md
+          path: infra/environment/devterraform-docs.md
 
       # Step 8: Apply Terraform (only for main branch pushes)
       - name: Apply Terraform
