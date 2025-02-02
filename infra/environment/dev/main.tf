@@ -32,10 +32,6 @@ module "eks" {
   eks_node_role_arn  = module.iam.eks_node_role_arn 
   private_subnet_ids          = module.vpc.private_subnet_ids
   vpc_id       = module.vpc.vpc_id
-  depends_on = [
-    module.iam.eks_worker_node_policy_attachment,
-    module.iam.eks_cni_policy_attachment
-  ]
 }
 
 
