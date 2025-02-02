@@ -20,3 +20,8 @@ variable "ssh_key_name" {
   type        = string
   default     = "terraform"  # Replace with your key name
 }
+
+variable "eks_node_role_arn" {
+  description = "IAM Role ARN for the EKS node group"
+  type        = string
+}
