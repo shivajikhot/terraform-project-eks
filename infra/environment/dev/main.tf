@@ -26,7 +26,7 @@ output "eks_cluster_role_arn" {
 module "eks" {
   source               = "../../modules/eks"
   cluster_name         = "my-eks-cluster"
-  cluster_role_arn     = module.iam.eks_cluster_role_arn
+  eks_cluster_role_arn  = module.iam.eks_cluster_role_arn
   private_subnet_ids          = module.vpc.private_subnet_ids
 }
 
