@@ -13,16 +13,14 @@ output "vpc_id" {
 module "iam" {
   source                = "../../modules/iam"
   cluster_role_name     = "eks-cluster-role"
-  fargate_role_name     = "eks-fargate-execution-role"
+  node_role_name    = "eks-node-group-role"
 }
 
 output "eks_cluster_role_arn" {
   value = module.iam.eks_cluster_role_arn
 }
 
-output "fargate_pod_execution_role_arn" {
-  value = module.iam.fargate_pod_execution_role_arn
-}
+
 
 
 module "eks" {
@@ -30,9 +28,6 @@ module "eks" {
   cluster_name         = "my-eks-cluster"
   cluster_role_arn     = module.iam.eks_cluster_role_arn
   private_subnet_ids          = module.vpc.private_subnet_ids
-  fargate_profile_name = "fargate-profile"
-  fargate_role_arn     = module.iam.fargate_pod_execution_role_arn
-  fargate_namespace    = "default"
 }
 
 output "eks_cluster_name" {
