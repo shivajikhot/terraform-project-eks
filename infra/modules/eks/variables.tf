@@ -13,17 +13,13 @@ variable "private_subnet_ids" {
   description = "A list of subnet IDs for the EKS cluster."
 }
 
-variable "fargate_profile_name" {
+variable "cluster_role_name" {
+  description = "IAM Role for EKS Cluster"
   type        = string
-  description = "The name of the Fargate profile."
 }
 
-variable "fargate_role_arn" {
+variable "ssh_key_name" {
+  description = "SSH Key for accessing EC2 nodes"
   type        = string
-  description = "The ARN of the Fargate pod execution role."
-}
-
-variable "fargate_namespace" {
-  type        = string
-  description = "The Kubernetes namespace for Fargate."
+  default     = "terraform"  # Replace with your key name
 }
