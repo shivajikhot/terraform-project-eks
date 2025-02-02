@@ -11,4 +11,4 @@ spec:
       port: 80  # External port to access
       targetPort: 3001  # Updated to match container port
       nodePort: 30080
-  type: NodePort
+  type: LoadBalancer
