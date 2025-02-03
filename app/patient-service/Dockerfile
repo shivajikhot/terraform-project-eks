@@ -3,7 +3,10 @@ FROM node:16-slim
 
 # Set the working directory inside the container
 WORKDIR /app
-RUN npm install express
+
+# Install express and serverless-http
+RUN npm install express serverless-http
+
 # Copy the patient service file into the container
 COPY patient-service.js .
 
