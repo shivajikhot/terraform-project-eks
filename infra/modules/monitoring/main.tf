@@ -21,11 +21,6 @@ provider "helm" {
 }
 
 
-
-
-
-
-
 resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
@@ -51,6 +46,6 @@ resource "helm_release" "grafana" {
 
   set {
     name  = "adminPassword"
-    value = "grafana-admin-password"
+    value = "admin"
   }
 }
