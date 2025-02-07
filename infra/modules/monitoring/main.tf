@@ -32,7 +32,7 @@ resource "helm_release" "prometheus" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
   namespace  = "monitoring"
-  timeout = 2000
+  timeout = 400
   
   set {
     name  = "podSecurityPolicy.enabled"
@@ -64,5 +64,35 @@ resource "helm_release" "grafana" {
   set {
     name  = "adminPassword"
     value = "admin"
+  }
+
+  set {
+    name  = "datasources.\"datasources.yaml\".apiVersion"
+    value = "1"
+  }
+
+  set {
+    name  = "datasources.\"datasources.yaml\".datasources[0].name"
+    value = "Prometheus"
+  }
+
+  set {
+    name  = "datasources.\"datasources.yaml\".datasources[0].type"
+    value = "prometheus"
+  }
+
+  set {
+    name  = "datasources.\"datasources.yaml\".datasources[0].url"
+    value = "http://prometheus-server.monitoring.svc.cluster.local"  # URL inside Kubernetes cluster
+  }
+
+  set {
+    name  = "datasources.\"datasources.yaml\".datasources[0].access"
+    value = "proxy"
+  }
+
+  set {
+    name  = "datasources.\"datasources.yaml\".datasources[0].isDefault"
+    value = "true"
   }
 }
