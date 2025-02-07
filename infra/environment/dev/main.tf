@@ -6,24 +6,12 @@ module "vpc" {
   availability_zone   = ["us-west-1b", "us-west-1c"]
 }
 
-output "vpc_id" {
-  value = module.vpc.vpc_id
-}
-
 module "iam" {
   source                = "../../modules/iam"
   cluster_role_name     = "eks-cluster-role"
   node_role_name    = "eks-node-group-role"
 
 }
-
-
-output "eks_cluster_role_arn" {
-  value = module.iam.eks_cluster_role_arn
-}
-
-
-
 
 module "eks" {
   source               = "../../modules/eks"
@@ -34,24 +22,11 @@ module "eks" {
   vpc_id       = module.vpc.vpc_id
 }
 
-
-output "eks_cluster_name" {
-  value = module.eks.eks_cluster_name
-}
-
-output "eks_cluster_endpoint" {
-  value = module.eks.eks_cluster_endpoint
-}
-
-
 module "ecr" {
   source = "../../modules/ecr"
 }
 
-output "patient_service_repo_uri" {
-  value = module.ecr.patient_service_repo_uri
+module "monitoring" {
+  source = "../../modules/monitoring"
 }
 
-output "appointment_service_repo_uri" {
-  value = module.ecr.appointment_service_repo_uri
-}
