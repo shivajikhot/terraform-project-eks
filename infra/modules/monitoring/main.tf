@@ -1,10 +1,3 @@
-this is our provider.tf
-
-provider "aws" {
-  region = "us-west-1"
-}
-
-
 provider "kubernetes" {
   host                   = var.eks_cluster_endpoint
   cluster_ca_certificate = base64decode(var.eks_cluster_certificate_authority)
