@@ -1,25 +1,24 @@
 module "vpc" {
-  source             = "../../modules/vpc"
-  cidr_block         = "10.0.0.0/16"
-  public_subnet_cidrs   = ["10.0.3.0/24", "10.0.4.0/24"]
-  private_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
-  availability_zone   = ["us-west-1b", "us-west-1c"]
+  source                  = "../../modules/vpc"
+  cidr_block              = var.vpc_cidr_block
+  public_subnet_cidrs     = var.public_subnet_cidrs
+  private_subnet_cidrs    = var.private_subnet_cidrs
+  availability_zone       = var.availability_zones
 }
 
 module "iam" {
   source                = "../../modules/iam"
-  cluster_role_name     = "eks-cluster-role"
-  node_role_name    = "eks-node-group-role"
-
+  cluster_role_name     = var.cluster_role_name
+  node_role_name        = var.node_role_name
 }
 
 module "eks" {
-  source               = "../../modules/eks"
-  cluster_name         = "my-eks-cluster"
-  eks_cluster_role_arn  = module.iam.eks_cluster_role_arn
-  eks_node_role_arn  = module.iam.eks_node_role_arn 
-  private_subnet_ids          = module.vpc.private_subnet_ids
-  vpc_id       = module.vpc.vpc_id
+  source                        = "../../modules/eks"
+  cluster_name                  = var.cluster_name
+  eks_cluster_role_arn          = module.iam.eks_cluster_role_arn
+  eks_node_role_arn             = module.iam.eks_node_role_arn
+  private_subnet_ids            = module.vpc.private_subnet_ids
+  vpc_id                        = module.vpc.vpc_id
 }
 
 module "ecr" {
@@ -27,9 +26,8 @@ module "ecr" {
 }
 
 module "monitoring" {
-  source = "../../modules/monitoring"
-  eks_cluster_id                     = module.eks.eks_cluster_id
-  eks_cluster_endpoint                = module.eks.eks_cluster_endpoint
-  eks_cluster_certificate_authority   = module.eks.eks_cluster_certificate_authority
+  source                              = "../../modules/monitoring"
+  eks_cluster_id                      = module.eks.eks_cluster_id
+  eks_cluster_endpoint                 = module.eks.eks_cluster_endpoint
+  eks_cluster_certificate_authority    = module.eks.eks_cluster_certificate_authority
 }
-
