@@ -91,7 +91,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: infra/environment/devterraform-docs.md
+          path: infra/environment/dev/terraform-docs.md
 
       # Step 8: Apply Terraform (only for main branch pushes)
       - name: Apply Terraform
