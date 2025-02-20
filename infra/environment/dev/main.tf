@@ -25,7 +25,10 @@ module "ecr" {
   source = "../../modules/ecr"
 }
 
+
 module "monitoring" {
-  source                              = "../../modules/monitoring"
-  depends_on = [module.eks]
+  source = "../../modules/monitoring"
+  eks_cluster_id                     = module.eks.eks_cluster_id
+  eks_cluster_endpoint                = module.eks.eks_cluster_endpoint
+  eks_cluster_certificate_authority   = module.eks.eks_cluster_certificate_authority
 }
