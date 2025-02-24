@@ -17,7 +17,7 @@ resource "helm_release" "prometheus" {
   }
 
   set {
-    name  = "server.service.type"
+    name  = "prometheus.service.type"
     value = "LoadBalancer"
    }
    set {
