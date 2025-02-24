@@ -21,20 +21,20 @@ provider "helm" {
   }
 }
 */
-
+/*
 # Create Namespace for Monitoring
 resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = "monitoring"
   }
 }
+*/
 
 resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   namespace  = "monitoring"
-  depends_on = [kubernetes_namespace.monitoring]
   timeout = 200
   set {
     name  = "podSecurityPolicy.enabled"
@@ -61,7 +61,6 @@ resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
   namespace  = "monitoring"
-  depends_on = [kubernetes_namespace.monitoring]
 
   set {
     name  = "service.type"
