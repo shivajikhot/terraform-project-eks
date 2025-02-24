@@ -12,7 +12,7 @@ provider "helm" {
   kubernetes {
     host                   = module.eks.eks_cluster_endpoint
     token                  = module.eks.cluster_auth_token
-    cluster_ca_certificate = base64decode(module.eks_cluster_certificate_authority)
+    cluster_ca_certificate = base64decode(module.eks.eks_cluster_certificate_authority)
   }
 }
 
