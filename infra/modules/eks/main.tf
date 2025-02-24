@@ -87,3 +87,6 @@ resource "aws_eks_node_group" "eks_node_group" {
     ec2_ssh_key = var.ssh_key_name  # Add your SSH key for access
   }
 }
+data "aws_eks_cluster_auth" "cluster" {
+  name = aws_eks_cluster.main.name
+}
