@@ -27,7 +27,6 @@ resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = "monitoring"
   }
-  depends_on = [module.eks]
 }
 
 resource "helm_release" "prometheus" {
@@ -35,7 +34,7 @@ resource "helm_release" "prometheus" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   namespace  = "monitoring"
-  depends_on = [module.eks, kubernetes_namespace.monitoring]
+  depends_on = [kubernetes_namespace.monitoring]
   timeout = 200
   set {
     name  = "podSecurityPolicy.enabled"
@@ -62,7 +61,7 @@ resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
   namespace  = "monitoring"
-  depends_on = [module.eks, kubernetes_namespace.monitoring]
+  depends_on = [kubernetes_namespace.monitoring]
 
   set {
     name  = "service.type"
