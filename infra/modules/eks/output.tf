@@ -15,5 +15,7 @@ output "eks_cluster_certificate_authority" {
   value = aws_eks_cluster.main.certificate_authority[0].data
 }
 
-
+output "cluster_auth_token" {
+  value = data.aws_eks_cluster_auth.cluster.token
+}
 
